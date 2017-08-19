@@ -42,7 +42,7 @@ def get_page_data(html):
     #Парсим таблицу по строкам
     ads = soup.find("table", class_ = 'table-bordered').find_all('tr', class_ = 'ptr')
     #Парсим по кускам, потом ,в конце for, будем собирать
-    for ad in ads:
+    for ad in ads[:30]:
 
         #Title of crypto-currency
         try:
@@ -110,6 +110,15 @@ def get_page_data(html):
                 'change'      : change}
 
         write_csv(data)
+
+
+        #Second csv
+
+        #try:
+        #    change = ad.find_all("td")[4].find_all("span")[2].find("span").text.strip()
+
+        #except:
+        #    change = ""
 
 
 def main():
