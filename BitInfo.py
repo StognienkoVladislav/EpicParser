@@ -32,7 +32,7 @@ def write_csv(data):
                          data['count_of_cap'],
                          data['change'],
                          ))
-        
+
 
 
 def get_page_data(html):
@@ -40,13 +40,13 @@ def get_page_data(html):
     soup = BeautifulSoup(html, "lxml")
 
     #Парсим таблицу по строкам
-    ads = soup.find("table", class_ = 'table-borderd').find_all('tr', class_ = 'ptr')
+    ads = soup.find("table", class_ = 'table-bordered').find_all('tr', class_ = 'ptr')
     #Парсим по кускам, потом ,в конце for, будем собирать
     for ad in ads:
 
         #Title of crypto-currency
         try:
-            title = ad.find("td", attrs = {'data-val' : 'BTC'}).find("span").find("a").text.strip()
+            title = ad.find_all("td")[0].find("span").find("a").text.strip()
 
         except:
             title = ""
