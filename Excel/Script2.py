@@ -124,3 +124,125 @@ ws = wb.active
 for r in dataframe_to_rows(df, index = True, header = True):
     ws.append(r)
 
+
+
+
+#Для форматирования данных в Excel
+import xlrd
+
+
+#Open a workbook
+workbook = xlrd.open_workbook('test.xls')
+
+#Load only current sheets to memory
+
+workbook = xlrd.open_workbook('test.xls', on_demand = True)
+
+
+#Load a specific sheet by name
+worksheet = workbook.sheet_by_name('Sheet1')
+
+#Load a specific sheet by index
+worksheet = workbook.sheet_by_index(0)
+
+#Retrieve the value from cell at indices (0, 0)
+print(sheet.cell(0, 0).value)
+
+
+########################################################
+
+import xlwt
+
+#Initialize a workbook
+book = xlwt.Workbook(encoding = 'utf-8')
+
+#Add a sheet to the workbook
+sheet1 = book.add_sheet('Python Sheet 1')
+
+#Write to the sheet of the workbook
+sheet1.write(0, 0, "This is the First Cell of the First Sheet")
+
+#Save the workbook
+book.save("spreadsheet.xls")
+
+
+#Initialize a workbook
+book = xlwt.Workbook()
+
+#Add a sheet to the workbook
+sheet1 = book.add_sheet("Sheet1")
+
+
+#The data
+cols = ["A", "B", "C", "D", "E"]
+txt = [0, 1, 2, 3, 4]
+
+#Loop over the rows and columns and fill in the values
+for num in range(5):
+    row = sheet1.row(num)
+    for index, col in enumerate(cols):
+        value = txt[index] + num
+        row.write(index, value)
+
+
+#Save the result
+book.save("test.xls")
+
+
+#pyexcel
+
+import pyexcel
+
+#Get an array from the data
+my_array = pyexcel.get_array(file_name = "test.xls")
+
+#Для получения данных в упорядоченном словаре списков
+from pyexcel._compact import OrderedDict
+
+#Get your data in an ordered dictionary of lists
+my_dict = pyexcel.get_dict(file_name = "test.xls", name_columns_by_row = 0)
+
+#Get your data in a dictionary of 2D arrays
+book_dict = pyexcel.get_book_dict(file_name = "test.xls")
+
+
+
+
+#Retrieve the records of the file
+records = pyexcel.get_records(file_name = "test.xls")
+
+
+
+#Запись файлов
+#Get the data
+data =[[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+#Save the array to a file
+pyexcel.save_as(array = data, dest_file_name = 'array_data.xls')
+
+
+
+#The data
+
+a2d_array_dictionary = {'Sheet 1': [
+                                   ['ID', 'AGE', 'SCORE']
+                                   [1, 22, 5],
+                                   [2, 15, 6],
+                                   [3, 28, 9]
+                                  ],
+                       'Sheet 2': [
+                                    ['X', 'Y', 'Z'],
+                                    [1, 2, 3],
+                                    [4, 5, 6]
+                                    [7, 8, 9]
+                                  ],
+                       'Sheet 3': [
+                                    ['M', 'N', 'O', 'P'],
+                                    [10, 11, 12, 13],
+                                    [14, 15, 16, 17]
+                                    [18, 19, 20, 21]
+                                   ]}
+
+#Save the data to a file
+pyexcel.save_book_as(bookdict = a2d_array_dictionary, dest_file_name = 'a2d_array_data.xls')
+
